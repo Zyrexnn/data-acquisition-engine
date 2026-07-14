@@ -126,13 +126,11 @@ func extractPhones(html string) []string {
 }
 
 func extractSocialMedia(html string) []string {
-	re := regexp.MustCompile(`https?://(?:www\.)?(linkedin\.com/in/[^\s"'<]+|instagram\.com/[^\s"'<]+|twitter\.com/[^\s"'<]+|x\.com/[^\s"'<]+|facebook\.com/[^\s"'<]+|fb\.com/[^\s"'<]+)`)
+	re := regexp.MustCompile(`https?://(?:www\.)?(?:linkedin\.com/in|instagram\.com|twitter\.com|x\.com|facebook\.com|fb\.com)/[a-zA-Z0-9._\-]+`)
 	matches := re.FindAllString(html, -1)
 	cleaned := make([]string, 0, len(matches))
 	for _, m := range matches {
-		m = strings.ReplaceAll(m, `\\`, "")
-		m = strings.ReplaceAll(m, `\`, "")
-		m = strings.TrimRight(m, `/"'`)
+		m = strings.TrimRight(m, "/")
 		cleaned = append(cleaned, m)
 	}
 	return uniqueStrings(cleaned)
