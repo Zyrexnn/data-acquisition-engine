@@ -2,8 +2,6 @@
 
 Sistem intelijen data perusahaan yang dibangun dengan **Go (Golang)** untuk mengumpulkan dan mengagregasi informasi dari tiga sumber utama — **Metadata Website**, **Informasi Domain (RDAP)**, dan **Lokasi Geografis (OpenStreetMap Nominatim)** — secara cepat dan efisien melalui pemrosesan paralel dengan goroutine.
 
-Proyek ini merupakan bagian dari **Technical Challenge Program Praktik Kerja Lapangan (PKL)** di **PT Berani Digital Indonesia**.
-
 ---
 
 ## Desain & Arsitektur Software
@@ -350,6 +348,4 @@ GET /company-information?domain=paper.id
 
 ---
 
-## Video Presentasi
 
-[Video Presentasi (YouTube Unlisted)](https://youtu.be/<placeholder-link>)
