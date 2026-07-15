@@ -8,7 +8,7 @@ data-acquisition-engine
 
 # Go
 /vendor/
-/go.sum
+# /go.sum
 
 # IDE
 .idea/
