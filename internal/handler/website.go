@@ -15,10 +15,23 @@ func NewWebsiteHandler(svc *service.WebsiteService) *WebsiteHandler {
 	return &WebsiteHandler{svc: svc}
 }
 
+// Extract godoc
+// @Summary Extract website metadata
+// @Description Mengekstrak metadata dari URL website, termasuk title, deskripsi, Open Graph, email, telepon, dan media sosial.
+// @Tags Website
+// @Accept json
+// @Produce json
+// @Param request body handler.WebsiteRequest true "URL website yang akan diekstrak"
+// @Success 200 {object} response.APIResponse{data=service.WebsiteData}
+// @Failure 400 {object} response.APIResponse
+// @Failure 500 {object} response.APIResponse
+// @Router /extract/website [post]
+type WebsiteRequest struct {
+	URL string `json:"url" example:"https://paper.id"`
+}
+
 func (h *WebsiteHandler) Extract(c *fiber.Ctx) error {
-	var body struct {
-		URL string `json:"url"`
-	}
+	var body WebsiteRequest
 
 	if err := c.BodyParser(&body); err != nil {
 		return response.BadRequest(c, "invalid request body")

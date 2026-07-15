@@ -119,6 +119,36 @@ docker compose down
 
 ---
 
+## Dokumentasi API Interaktif (Swagger UI)
+
+Proyek ini dilengkapi dengan dokumentasi API interaktif menggunakan **Swagger UI** yang di-generate secara otomatis melalui anotasi komentar pada source code menggunakan library [swaggo/swag](https://github.com/swaggo/swag).
+
+### Mengakses Swagger UI
+
+Setelah aplikasi berjalan (baik melalui Go langsung maupun Docker), buka browser dan akses:
+
+```
+http://localhost:8080/swagger/index.html
+```
+
+Swagger UI menyediakan:
+- Deskripsi lengkap setiap endpoint beserta parameter dan response
+- Kemampuan untuk mencoba langsung setiap API (*Try it out*) dari browser
+- Model schema untuk setiap request body dan response JSON
+- Dokumentasi yang selalu sinkron dengan source code
+
+### Regenerasi Dokumentasi Swagger
+
+Jika terdapat perubahan pada anotasi komentar handler, jalankan ulang perintah berikut untuk memperbarui dokumentasi:
+
+```bash
+swag init -g cmd/api/main.go
+```
+
+Perintah ini akan me-regenerate folder `docs/` yang berisi `docs.go`, `swagger.json`, dan `swagger.yaml`.
+
+---
+
 ## Dokumentasi Endpoint API
 
 ### Standarisasi Response

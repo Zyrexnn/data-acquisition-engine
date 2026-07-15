@@ -1,0 +1,197 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API untuk ekstraksi metadata website, domain intelligence, dan lokasi geografis.",
+        "title": "Data Acquisition Engine API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/company-information": {
+            "get": {
+                "description": "Menggabungkan data website, domain, dan lokasi secara paralel berdasarkan domain perusahaan. Mendukung fallback lokasi jika title website tidak menghasilkan hasil.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Company"
+                ],
+                "summary": "Get unified company information",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Domain perusahaan (contoh: paper.id)",
+                        "name": "domain",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.APIResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/service.CompanyData"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.APIResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "response.APIResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "error": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "service.CompanyData": {
+            "type": "object",
+            "properties": {
+                "domain": {
+                    "$ref": "#/definitions/service.DomainData"
+                },
+                "location": {
+                    "$ref": "#/definitions/service.LocationData"
+                },
+                "website": {
+                    "$ref": "#/definitions/service.WebsiteData"
+                }
+            }
+        },
+        "service.DomainData": {
+            "type": "object",
+            "properties": {
+                "domain": {
+                    "type": "string"
+                },
+                "expired_at": {
+                    "type": "string"
+                },
+                "last_updated": {
+                    "type": "string"
+                },
+                "nameservers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "registered_at": {
+                    "type": "string"
+                },
+                "registrar": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "service.LocationData": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "display_name": {
+                    "type": "string"
+                },
+                "importance": {
+                    "type": "number"
+                },
+                "latitude": {
+                    "type": "string"
+                },
+                "longitude": {
+                    "type": "string"
+                },
+                "osm_type": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.WebsiteData": {
+            "type": "object",
+            "properties": {
+                "canonical": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "emails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "favicon": {
+                    "type": "string"
+                },
+                "open_graph": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "phones": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "social_media": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,130 @@
+basePath: /
+definitions:
+  response.APIResponse:
+    properties:
+      data: {}
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  service.CompanyData:
+    properties:
+      domain:
+        $ref: '#/definitions/service.DomainData'
+      location:
+        $ref: '#/definitions/service.LocationData'
+      website:
+        $ref: '#/definitions/service.WebsiteData'
+    type: object
+  service.DomainData:
+    properties:
+      domain:
+        type: string
+      expired_at:
+        type: string
+      last_updated:
+        type: string
+      nameservers:
+        items:
+          type: string
+        type: array
+      registered_at:
+        type: string
+      registrar:
+        type: string
+      status:
+        items:
+          type: string
+        type: array
+    type: object
+  service.LocationData:
+    properties:
+      address:
+        additionalProperties: true
+        type: object
+      display_name:
+        type: string
+      importance:
+        type: number
+      latitude:
+        type: string
+      longitude:
+        type: string
+      osm_type:
+        type: string
+    type: object
+  service.WebsiteData:
+    properties:
+      canonical:
+        type: string
+      description:
+        type: string
+      emails:
+        items:
+          type: string
+        type: array
+      favicon:
+        type: string
+      open_graph:
+        additionalProperties:
+          type: string
+        type: object
+      phones:
+        items:
+          type: string
+        type: array
+      social_media:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+      url:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API untuk ekstraksi metadata website, domain intelligence, dan lokasi
+    geografis.
+  title: Data Acquisition Engine API
+  version: "1.0"
+paths:
+  /company-information:
+    get:
+      consumes:
+      - application/json
+      description: Menggabungkan data website, domain, dan lokasi secara paralel berdasarkan
+        domain perusahaan. Mendukung fallback lokasi jika title website tidak menghasilkan
+        hasil.
+      parameters:
+      - description: 'Domain perusahaan (contoh: paper.id)'
+        in: query
+        name: domain
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.CompanyData'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.APIResponse'
+      summary: Get unified company information
+      tags:
+      - Company
+swagger: "2.0"
