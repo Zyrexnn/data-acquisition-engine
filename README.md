@@ -59,14 +59,14 @@ Endpoint integrasi final `GET /company-information` dirancang untuk meminimalkan
 
 ### Prasyarat
 
-- **Go** versi 1.21 atau lebih baru
+- **Go** versi 1.25 atau lebih baru
 - Koneksi internet (untuk memanggil API eksternal)
 
-### Langkah Instalasi
+### Menjalankan dengan Go
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/<username>/data-acquisition-engine.git
+git clone https://github.com/Zyrexnn/data-acquisition-engine.git
 cd data-acquisition-engine
 
 # 2. Download dependencies
@@ -77,6 +77,45 @@ go run cmd/api/main.go
 ```
 
 Server akan berjalan pada `http://localhost:8080`.
+
+### Menjalankan dengan Docker
+
+#### Prasyarat Docker
+
+- **Docker** dan **Docker Compose** terinstal di sistem
+
+#### Menggunakan Docker Compose (Direkomendasikan)
+
+```bash
+# 1. Clone repository
+git clone https://github.com/Zyrexnn/data-acquisition-engine.git
+cd data-acquisition-engine
+
+# 2. Build dan jalankan container
+docker compose up --build -d
+
+# 3. Verifikasi container berjalan
+docker ps
+```
+
+#### Menggunakan Docker langsung
+
+```bash
+# 1. Build image
+docker build -t data-acquisition-engine .
+
+# 2. Jalankan container
+docker run -d -p 8080:8080 --name data-acquisition-engine data-acquisition-engine
+```
+
+Server akan berjalan pada `http://localhost:8080`.
+
+#### Menghentikan Container
+
+```bash
+# Hentikan dan hapus container
+docker compose down
+```
 
 ---
 
