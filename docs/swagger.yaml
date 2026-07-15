@@ -1,5 +1,23 @@
 basePath: /
 definitions:
+  handler.DomainRequest:
+    properties:
+      domain:
+        example: paper.id
+        type: string
+    type: object
+  handler.LocationRequest:
+    properties:
+      query:
+        example: Paper.id Jakarta
+        type: string
+    type: object
+  handler.WebsiteRequest:
+    properties:
+      url:
+        example: https://paper.id
+        type: string
+    type: object
   response.APIResponse:
     properties:
       data: {}
@@ -127,4 +145,112 @@ paths:
       summary: Get unified company information
       tags:
       - Company
+  /extract/domain:
+    post:
+      consumes:
+      - application/json
+      description: Mengambil informasi domain melalui protokol RDAP, termasuk registrar,
+        tanggal registrasi, kedaluwarsa, status, dan nameserver.
+      parameters:
+      - description: Domain yang akan diekstrak
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.DomainRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.DomainData'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.APIResponse'
+      summary: Extract domain intelligence
+      tags:
+      - Domain
+  /extract/location:
+    post:
+      consumes:
+      - application/json
+      description: Mencari informasi lokasi geografis berdasarkan query teks menggunakan
+        OpenStreetMap Nominatim.
+      parameters:
+      - description: Query pencarian lokasi
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.LocationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.LocationData'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.APIResponse'
+      summary: Find location by query
+      tags:
+      - Location
+  /extract/website:
+    post:
+      consumes:
+      - application/json
+      description: Mengekstrak metadata dari URL website, termasuk title, deskripsi,
+        Open Graph, email, telepon, dan media sosial.
+      parameters:
+      - description: URL website yang akan diekstrak
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.WebsiteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/service.WebsiteData'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.APIResponse'
+      summary: Extract website metadata
+      tags:
+      - Website
 swagger: "2.0"

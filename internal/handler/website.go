@@ -15,6 +15,10 @@ func NewWebsiteHandler(svc *service.WebsiteService) *WebsiteHandler {
 	return &WebsiteHandler{svc: svc}
 }
 
+type WebsiteRequest struct {
+	URL string `json:"url" example:"https://paper.id"`
+}
+
 // Extract godoc
 // @Summary Extract website metadata
 // @Description Mengekstrak metadata dari URL website, termasuk title, deskripsi, Open Graph, email, telepon, dan media sosial.
@@ -26,10 +30,6 @@ func NewWebsiteHandler(svc *service.WebsiteService) *WebsiteHandler {
 // @Failure 400 {object} response.APIResponse
 // @Failure 500 {object} response.APIResponse
 // @Router /extract/website [post]
-type WebsiteRequest struct {
-	URL string `json:"url" example:"https://paper.id"`
-}
-
 func (h *WebsiteHandler) Extract(c *fiber.Ctx) error {
 	var body WebsiteRequest
 
@@ -48,3 +48,4 @@ func (h *WebsiteHandler) Extract(c *fiber.Ctx) error {
 
 	return response.Success(c, data)
 }
+	

@@ -15,6 +15,10 @@ func NewLocationHandler(svc *service.LocationService) *LocationHandler {
 	return &LocationHandler{svc: svc}
 }
 
+type LocationRequest struct {
+	Query string `json:"query" example:"Paper.id Jakarta"`
+}
+
 // Find godoc
 // @Summary Find location by query
 // @Description Mencari informasi lokasi geografis berdasarkan query teks menggunakan OpenStreetMap Nominatim.
@@ -26,10 +30,6 @@ func NewLocationHandler(svc *service.LocationService) *LocationHandler {
 // @Failure 400 {object} response.APIResponse
 // @Failure 500 {object} response.APIResponse
 // @Router /extract/location [post]
-type LocationRequest struct {
-	Query string `json:"query" example:"Paper.id Jakarta"`
-}
-
 func (h *LocationHandler) Find(c *fiber.Ctx) error {
 	var body LocationRequest
 

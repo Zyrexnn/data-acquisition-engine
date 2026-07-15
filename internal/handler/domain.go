@@ -15,6 +15,10 @@ func NewDomainHandler(svc *service.DomainService) *DomainHandler {
 	return &DomainHandler{svc: svc}
 }
 
+type DomainRequest struct {
+	Domain string `json:"domain" example:"paper.id"`
+}
+
 // Extract godoc
 // @Summary Extract domain intelligence
 // @Description Mengambil informasi domain melalui protokol RDAP, termasuk registrar, tanggal registrasi, kedaluwarsa, status, dan nameserver.
@@ -26,10 +30,6 @@ func NewDomainHandler(svc *service.DomainService) *DomainHandler {
 // @Failure 400 {object} response.APIResponse
 // @Failure 500 {object} response.APIResponse
 // @Router /extract/domain [post]
-type DomainRequest struct {
-	Domain string `json:"domain" example:"paper.id"`
-}
-
 func (h *DomainHandler) Extract(c *fiber.Ctx) error {
 	var body DomainRequest
 
