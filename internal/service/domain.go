@@ -81,17 +81,8 @@ type rdapResponseAlt struct {
 	} `json:"nameservers"`
 }
 
-func cleanDomain(input string) string {
-	input = strings.TrimSpace(input)
-	input = strings.TrimPrefix(input, "https://")
-	input = strings.TrimPrefix(input, "http://")
-	input = strings.TrimPrefix(input, "www.")
-	input = strings.TrimRight(input, "/")
-	return input
-}
-
 func (s *DomainService) Extract(domain string) (*DomainData, error) {
-	cleaned := cleanDomain(domain)
+	cleaned := CleanDomain(domain)
 	if cleaned == "" {
 		return nil, fmt.Errorf("domain is empty after cleaning")
 	}

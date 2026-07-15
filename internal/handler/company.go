@@ -16,13 +16,16 @@ func NewCompanyHandler(svc *service.CompanyService) *CompanyHandler {
 }
 
 func (h *CompanyHandler) GetInfo(c *fiber.Ctx) error {
-	domain := c.Query("domain")
+	domain := service.CleanDomain(c.Query("domain"))
 
 	if domain == "" {
 		return response.BadRequest(c, "domain query param is required")
 	}
 
-	data := h.svc.GetInfo(domain)
+	data, err := h.svc.GetInfo(domain)
+	if err != nil {
+		return response.InternalError(c, err.Error())
+	}
 
 	return response.Success(c, data)
 }
