@@ -332,7 +332,7 @@ Endpoint integrasi final yang menggabungkan ketiga service secara paralel. Mener
 GET /company-information?domain=paper.id
 ```
 
-**Response:**
+**Response (contoh hasil nyata dari deployment Render `https://data-acquisition-engine.onrender.com/company-information?domain=paper.id`):**
 
 ```json
 {
@@ -340,42 +340,42 @@ GET /company-information?domain=paper.id
   "data": {
     "website": {
       "url": "https://paper.id",
-      "title": "Paper.id - Platform Invoice & Pembayaran Bisnis",
-      "description": "...",
-      "canonical": "https://paper.id",
-      "favicon": "/favicon.ico",
+      "title": "Kelola Invoice & Pembayaran Bisnis Anda Secara Digital, Simple & Otomatis",
+      "description": "Atur tempo pembayaran bisnis serta kirim & terima pembayaran dengan kartu kredit, invoice juga langsung sah dengan e-Meterai. Coba Sekarang!",
+      "canonical": "https://www.paper.id/",
+      "favicon": "/favicon-light.svg",
       "emails": ["support@paper.id"],
-      "phones": ["+6281234567890"],
-      "social_media": ["https://linkedin.com/company/paperid"],
+      "phones": ["+6285574677916", "+6285219526186"],
+      "social_media": [
+        "https://www.instagram.com/paperindonesia",
+        "https://www.facebook.com/paperindonesia",
+        "https://x.com/paper_indonesia"
+      ],
       "open_graph": {
-        "title": "Paper.id",
-        "description": "...",
-        "image": "https://paper.id/og-image.png"
+        "title": "Kelola Invoice & Pembayaran Bisnis Anda Secara Digital, Simple & Otomatis",
+        "description": "Atur tempo pembayaran bisnis serta kirim & terima pembayaran dengan kartu kredit, invoice juga langsung sah dengan e-Meterai. Coba Sekarang!",
+        "image": "https://www.paper.id/assets/images/seo/og-paper.webp"
       }
     },
     "domain": {
       "domain": "paper.id",
-      "registrar": "Digital Registra",
-      "registered_at": "2018-03-15 00:00:00",
-      "expired_at": "2026-03-15 00:00:00",
-      "last_updated": "2024-06-01 00:00:00",
-      "status": ["serverTransferProhibited"],
-      "nameservers": ["ns1.example.com", "ns2.example.com"]
+      "registrar": "PT Jagat Informasi Solusi",
+      "registered_at": "2014-08-15 11:00:45",
+      "expired_at": "2030-08-15 23:59:59",
+      "last_updated": "2025-09-29 01:03:31",
+      "status": ["active"],
+      "nameservers": ["jeremy.ns.cloudflare.com", "magali.ns.cloudflare.com"]
     },
-    "location": {
-      "display_name": "Jakarta, Indonesia",
-      "latitude": "-6.2088",
-      "longitude": "106.8456",
-      "importance": 0.95,
-      "osm_type": "relation",
-      "address": {
-        "city": "Jakarta",
-        "country": "Indonesia"
-      }
-    }
+    "location": null
   }
 }
 ```
+
+> **Catatan:** Field `location` bernilai `null` ketika layanan Nominatim tidak menemukan hasil (sesuai mekanisme partial-failure pada tabel Error Handling di atas). Contoh output mentah tersimpan di [`dokumentasi/company-information-output.json`](dokumentasi/company-information-output.json).
+
+**Tangkapan layar hasil response:**
+
+![Hasil Output Company Information](dokumentasi/hasiloutput.png)
 
 **Error Handling:**
 
