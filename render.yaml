@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: data-acquisition-engine
+    runtime: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /swagger/index.html
+    envVars:
+      - key: PORT
+        value: 8080
