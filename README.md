@@ -117,6 +117,35 @@ docker compose down
 
 ---
 
+## Deployment (Render)
+
+Proyek ini sudah dideploy dan dapat diakses secara publik melalui **Render**:
+
+- **Base URL:** `https://data-acquisition-engine.onrender.com`
+
+Semua endpoint yang sama dengan versi lokal dapat diakses langsung melalui URL produksi di atas. Berikut contoh penggunaan endpoint utama pada environment Render:
+
+```
+# Dokumentasi Swagger UI
+https://data-acquisition-engine.onrender.com/swagger/index.html
+
+# Endpoint integrasi perusahaan
+https://data-acquisition-engine.onrender.com/company-information?domain=paper.id
+
+# Extract website metadata
+POST https://data-acquisition-engine.onrender.com/extract/website
+
+# Extract domain intelligence
+POST https://data-acquisition-engine.onrender.com/extract/domain
+
+# Find location
+POST https://data-acquisition-engine.onrender.com/extract/location
+```
+
+> **Catatan:** Aplikasi di-deploy menggunakan [`render.yaml`](render.yaml) (atau Docker image yang sama dengan instruksi di atas). Free tier Render akan melakukan *spin down* saat tidak ada traffic, sehingga request pertama mungkin membutuhkan waktu *cold start* beberapa detik.
+
+---
+
 ## Dokumentasi API Interaktif (Swagger UI)
 
 Proyek ini dilengkapi dengan dokumentasi API interaktif menggunakan **Swagger UI** yang di-generate secara otomatis melalui anotasi komentar pada source code menggunakan library [swaggo/swag](https://github.com/swaggo/swag).
@@ -127,6 +156,12 @@ Setelah aplikasi berjalan (baik melalui Go langsung maupun Docker), buka browser
 
 ```
 http://localhost:8080/swagger/index.html
+```
+
+Atau akses versi produksi yang sudah dideploy di Render:
+
+```
+https://data-acquisition-engine.onrender.com/swagger/index.html
 ```
 
 Swagger UI menyediakan:
@@ -175,6 +210,7 @@ Mengekstrak metadata dari sebuah URL website, meliputi title, deskripsi, Open Gr
 
 - **Endpoint:** `POST /extract/website`
 - **Content-Type:** `application/json`
+- **Live (Render):** `POST https://data-acquisition-engine.onrender.com/extract/website`
 
 **Request Body:**
 
@@ -215,6 +251,7 @@ Mengambil informasi domain melalui protokol RDAP, termipu registrar, tanggal reg
 
 - **Endpoint:** `POST /extract/domain`
 - **Content-Type:** `application/json`
+- **Live (Render):** `POST https://data-acquisition-engine.onrender.com/extract/domain`
 
 **Request Body:**
 
@@ -249,6 +286,7 @@ Mencari informasi lokasi geografis berdasarkan query teks menggunakan OpenStreet
 
 - **Endpoint:** `POST /extract/location`
 - **Content-Type:** `application/json`
+- **Live (Render):** `POST https://data-acquisition-engine.onrender.com/extract/location`
 
 **Request Body:**
 
@@ -286,6 +324,7 @@ Endpoint integrasi final yang menggabungkan ketiga service secara paralel. Mener
 - **Endpoint:** `GET /company-information`
 - **Method:** `GET`
 - **Query Parameter:** `domain` (wajib)
+- **Live (Render):** `GET https://data-acquisition-engine.onrender.com/company-information?domain=paper.id`
 
 **Request:**
 
